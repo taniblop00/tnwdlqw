@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     """
 
     # -- Paths ----------------------------------------------------------
-    data_dir: Path = Field(default=PROJECT_ROOT / "data")
+    data_dir: Path = Field(default=PROJECT_ROOT / "data", alias="WC_DATA_DIR")
     raw_dir: Path = Field(default=PROJECT_ROOT / "data" / "raw")
     processed_dir: Path = Field(default=PROJECT_ROOT / "data" / "processed")
     features_dir: Path = Field(default=PROJECT_ROOT / "data" / "features")
@@ -65,7 +65,12 @@ class Settings(BaseSettings):
     calibration_months: int = 6
     validation_months: int = 12
 
-    model_config = {"env_file": PROJECT_ROOT / ".env", "env_file_encoding": "utf-8"}
+    model_config = {
+        "env_file": PROJECT_ROOT / ".env", 
+        "env_file_encoding": "utf-8",
+        "extra": "ignore",
+        "populate_by_name": True
+    }
 
     def ensure_dirs(self) -> None:
         """Create all required directories if they don't exist."""
