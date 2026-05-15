@@ -58,10 +58,11 @@ class XGBoostPredictor(BasePredictor):
             "verbosity": 0,
         }
         if use_gpu:
+            # XGBoost 2.0+ uses 'device' instead of 'gpu_id'
+            # 'tree_method'="hist" handles both CPU and GPU now
             self.default_params.update({
-                "tree_method": "gpu_hist",
-                "predictor": "gpu_predictor",
-                "gpu_id": 0,
+                "tree_method": "hist",
+                "device": "cuda",
                 "n_jobs": 1,
             })
         else:
